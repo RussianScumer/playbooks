@@ -1,0 +1,11 @@
+---
+    - name: Проверка установлен ли GNOME
+      command: gnome-shell --version
+      register: gnome_check
+      ignore_errors: yes
+
+    - name: Установка GNOME, если не установлен
+      dnf:
+        name: gnome-desktop
+        state: present
+      when: gnome_check.rc != 0

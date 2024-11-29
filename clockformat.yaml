@@ -1,0 +1,17 @@
+- name: Изменение формата даты и времени
+  hosts: all
+  remote_user: root
+  become: yes
+  vars:
+    format: '24h'
+
+  tasks:
+    - include_tasks: checkgnomeinstalled.yaml  
+
+    - name: Изменение формата даты и времени
+      command: gsettings set org.gnome.desktop.interface clock-format '{{ format }}'
+
+    - name: Перезапуск GNOME без перезагрузки
+      command: killall -3 gnome-shell  
+      async: 10
+      poll: 0

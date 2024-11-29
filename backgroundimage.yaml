@@ -1,0 +1,17 @@
+- name: Изменение картинки фона
+  hosts: all
+  remote_user: root
+  become: yes
+  vars:
+    path_to_image: 'path'
+
+  tasks:
+    - include_tasks: checkgnomeinstalled.yaml  
+
+    - name: Изменение картинки фона
+      command: gsettings set org.gnome.desktop.background picture-uri '{{ path_to_image }}'
+
+    - name: Перезапуск GNOME без перезагрузки
+      command: killall -3 gnome-shell  
+      async: 10
+      poll: 0

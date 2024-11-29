@@ -1,0 +1,17 @@
+- name: Изменение размера текста
+  hosts: all
+  remote_user: root
+  become: yes
+  vars:
+    option: 'zoom'
+
+  tasks:
+    - include_tasks: checkgnomeinstalled.yaml  
+
+    - name: Изменение фона
+      command: gsettings set org.gnome.desktop.background picture-options '{{ option }}'
+
+    - name: Перезапуск GNOME без перезагрузки
+      command: killall -3 gnome-shell  
+      async: 10
+      poll: 0

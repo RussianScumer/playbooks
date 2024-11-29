@@ -1,0 +1,17 @@
+- name: Изменение отображения даты
+  hosts: all
+  remote_user: root
+  become: yes
+  vars:
+    show_date: 'true'
+
+  tasks:
+    - include_tasks: checkgnomeinstalled.yaml  
+
+    - name: Изменение отображения даты
+      command: gsettings set org.gnome.desktop.interface clock-show-date '{{ show_date }}'
+
+    - name: Перезапуск GNOME без перезагрузки
+      command: killall -3 gnome-shell  
+      async: 10
+      poll: 0

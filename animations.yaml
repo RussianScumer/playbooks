@@ -1,0 +1,17 @@
+- name: Изменение анимации
+  hosts: all
+  remote_user: root
+  become: yes
+  vars:
+    animations: 'true'
+
+  tasks:
+    - include_tasks: checkgnomeinstalled.yaml  
+
+    - name: Изменение темы иконок GNOME
+      command: gsettings set org.gnome.desktop.interface enable-animations '{{ animations }}'
+
+    - name: Перезапуск GNOME без перезагрузки
+      command: killall -3 gnome-shell  
+      async: 10
+      poll: 0
