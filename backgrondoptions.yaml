@@ -9,7 +9,9 @@
     - include_tasks: checkgnomeinstalled.yaml  
 
     - name: Изменение фона
-      command: gsettings set org.gnome.desktop.background picture-options '{{ option }}'
+      dconf: 
+        key: "/org/gnome/desktop/background/picture-options"
+        value: "'{{ option }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

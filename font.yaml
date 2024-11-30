@@ -3,15 +3,16 @@
   remote_user: root
   become: yes
   vars:
-    font_name: 'Cantarell'
-    font_size: '11'
+    font_name_and_size: 'Cantarell 14' 
 
   tasks:
     - include_tasks: checkgnomeinstalled.yaml  
 
     - name: Изменение шрифта
-      command: gsettings set org.gnome.desktop.interface font-name '{{ font_name, font_size }}'
-
+      dconf:
+        key: "/org/gnome/desktop/interface/font-name"
+        value: "'{{ font_name_and_size }}'"
+      
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10

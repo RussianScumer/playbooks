@@ -9,7 +9,9 @@
     - include_tasks: checkgnomeinstalled.yaml  
 
     - name: Изменение темы иконок GNOME
-      command: gsettings set org.gnome.desktop.interface text-scaling-factor '{{ factor }}'
+      dconf:
+       key: "/org/gnome/desktop/interface/text-scaling-factor"
+       value: "'{{ factor }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

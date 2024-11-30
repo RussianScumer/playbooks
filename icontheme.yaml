@@ -14,7 +14,9 @@
         state: present
 
     - name: Изменение темы иконок GNOME
-      command: gsettings set org.gnome.desktop.interface icon-theme '{{ theme_name }}'
+      dconf:
+        key: "/org/gnome/desktop/interface/icon"
+        value: "'{{ theme_name }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

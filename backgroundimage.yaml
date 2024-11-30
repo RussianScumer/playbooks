@@ -9,8 +9,9 @@
     - include_tasks: checkgnomeinstalled.yaml  
 
     - name: Изменение картинки фона
-      command: gsettings set org.gnome.desktop.background picture-uri '{{ path_to_image }}'
-
+      dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'{{ path_to_image }}'"
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10

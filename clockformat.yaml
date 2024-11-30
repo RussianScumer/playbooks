@@ -9,7 +9,9 @@
     - include_tasks: checkgnomeinstalled.yaml  
 
     - name: Изменение формата даты и времени
-      command: gsettings set org.gnome.desktop.interface clock-format '{{ format }}'
+      dconf:
+        value: "/org/gnome/desktop/interface/clock-show-date"
+        key: "'{{ format }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

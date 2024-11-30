@@ -14,7 +14,10 @@
         state: present
 
     - name: Изменение темы GNOME
-      command: gsettings set org.gnome.desktop.interface gtk-theme '{{ theme_name }}'
+      dconf:
+        key: "/org/gnome/desktop/interface/gtk-theme"
+        value: "'{{ theme_name }}'"
+        state: present
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
