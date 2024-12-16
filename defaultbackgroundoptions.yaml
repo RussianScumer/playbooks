@@ -1,13 +1,11 @@
-- name: Изменение анимации
-
+- name: Изменение размера текста
   hosts: all
   remote_user: root
   become: yes
   vars:
-    animations: 'true'
+    option: 'zoom'
 
   tasks:
-
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
@@ -30,10 +28,10 @@
         state: present
       when: dconf_check.rc != 0  
 
-    - name: Изменение темы иконок GNOME
-      dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
+    - name: Изменение фона
+      dconf: 
+        key: "/org/gnome/desktop/background/picture-options"
+        state: absent
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

@@ -32,8 +32,8 @@
 
     - name: Изменение темы иконок GNOME
       dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
+       key: "/org/gnome/desktop/interface/enable-animations"
+       state: absent
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

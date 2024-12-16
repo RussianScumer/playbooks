@@ -1,13 +1,11 @@
-- name: Изменение анимации
-
+- name: Изменение отображения даты
   hosts: all
   remote_user: root
   become: yes
   vars:
-    animations: 'true'
+    show_date: 'true'
 
   tasks:
-
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
@@ -30,10 +28,10 @@
         state: present
       when: dconf_check.rc != 0  
 
-    - name: Изменение темы иконок GNOME
+    - name: Изменение отображения даты
       dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
+        key: "/org/gnome/desktop/interface/clock-show-date"
+        state: absent
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

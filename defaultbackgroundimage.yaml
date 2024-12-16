@@ -1,13 +1,11 @@
-- name: Изменение анимации
-
+- name: Изменение картинки фона
   hosts: all
   remote_user: root
   become: yes
   vars:
-    animations: 'true'
+    path_to_image: 'path'
 
   tasks:
-
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
@@ -30,11 +28,10 @@
         state: present
       when: dconf_check.rc != 0  
 
-    - name: Изменение темы иконок GNOME
+    - name: Изменение картинки фона
       dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
-
+        key: "/org/gnome/desktop/background/picture-uri"
+        state: absent
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10

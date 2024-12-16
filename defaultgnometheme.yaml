@@ -1,13 +1,11 @@
-- name: Изменение анимации
-
+- name: Установка и изменение темы GNOME
   hosts: all
   remote_user: root
   become: yes
   vars:
-    animations: 'true'
+    theme_name: 'Adwaita'
 
   tasks:
-
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
@@ -30,10 +28,15 @@
         state: present
       when: dconf_check.rc != 0  
 
-    - name: Изменение темы иконок GNOME
+    - name: Установка темы GNOME
+      dnf:
+        name: gnome-themes-standard
+        state: present
+
+    - name: Изменение темы GNOME
       dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
+        key: "/org/gnome/desktop/interface/gtk-theme"
+        state: absent
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

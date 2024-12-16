@@ -1,13 +1,11 @@
-- name: Изменение анимации
-
+- name: Установка шрифта по умолчанию
   hosts: all
   remote_user: root
   become: yes
   vars:
-    animations: 'true'
+    font_name_and_size: 'Cantarell 14' 
 
   tasks:
-
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
@@ -28,13 +26,13 @@
       dnf:
         name: dconf-editor
         state: present
-      when: dconf_check.rc != 0  
+      when: dconf_check.rc != 0   
 
-    - name: Изменение темы иконок GNOME
+    - name: Изменение шрифта
       dconf:
-       value: "/org/gnome/desktop/interface/enable-animations"
-       key: "'{{ animations }}'"
-
+        key: "/org/gnome/desktop/interface/font-name"
+        state: absent
+      
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10
