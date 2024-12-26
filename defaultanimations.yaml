@@ -1,8 +1,9 @@
-- name: Изменение анимации
+- name: Включение или выключение анимаций
 
   hosts: all
   remote_user: root
   become: yes
+#true false  
   vars:
     animations: 'true'
 

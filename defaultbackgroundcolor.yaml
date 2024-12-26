@@ -2,6 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
+#цвет в шестнадцатеричном формате 
   vars:
     colorHEX: '#023c88'
 

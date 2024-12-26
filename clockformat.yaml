@@ -2,16 +2,37 @@
   hosts: all
   remote_user: root
   become: yes
+#Формат отображения часов 12h 24h
   vars:
     format: '24h'
 
   tasks:
-    - include_tasks: checkgnomeinstalled.yaml  
+    - name: Проверка установлен ли GNOME
+      command: gnome-shell --version
+      register: gnome_check
+      ignore_errors: yes
+
+    - name: Установка GNOME, если не установлен
+      dnf:
+        name: gnome-desktop
+        state: present
+      when: gnome_check.rc != 0
+
+    - name:  Проверка установлен ли dconf
+      command: dconf-editor --version
+      register: dconf_check
+      ignore_errors: yes
+
+    - name: Установка dconf
+      dnf:
+        name: dconf-editor
+        state: present
+      when: dconf_check.rc != 0   
 
     - name: Изменение формата даты и времени
       dconf:
-        value: "/org/gnome/desktop/interface/clock-show-date"
-        key: "'{{ format }}'"
+        key: "/org/gnome/desktop/interface/clock-format"
+        value: "'{{ format }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

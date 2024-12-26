@@ -1,12 +1,33 @@
-- name: Изменение размера текста
+- name: Настройки отображения
   hosts: all
   remote_user: root
   become: yes
+  #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
   vars:
     option: 'zoom'
 
   tasks:
-    - include_tasks: checkgnomeinstalled.yaml  
+    - name: Проверка установлен ли GNOME
+      command: gnome-shell --version
+      register: gnome_check
+      ignore_errors: yes
+
+    - name: Установка GNOME, если не установлен
+      dnf:
+        name: gnome-desktop
+        state: present
+      when: gnome_check.rc != 0
+
+    - name:  Проверка установлен ли dconf
+      command: dconf-editor --version
+      register: dconf_check
+      ignore_errors: yes
+
+    - name: Установка dconf
+      dnf:
+        name: dconf-editor
+        state: present
+      when: dconf_check.rc != 0  
 
     - name: Изменение фона
       dconf: 

@@ -2,6 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
+#Коэффициент размера текста  
   vars:
     factor: '1.5'
 
