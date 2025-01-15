@@ -1,0 +1,27 @@
+---
+- name: Дублирование xrandr
+  hosts: all
+  become: yes
+  tasks:
+    - name: Получение списка экранов
+      command: xrandr --query
+      register: xrandr_output
+      
+    - name: id экранов  
+      set_fact: 
+       connected_displays: "{{ xrandr_output.stdout | regex_findall('(\\S+) connected') }}"
+
+    - name: Проверка что экранов > 1
+      assert:
+        that:
+          - connected_displays | length > 1
+
+    - name: Определение основного дисплея
+      set_fact:
+        primary_display: "{{ connected_displays[0] }}"
+
+    - name: Настройка дублирования для всех остальных дисплеев
+      command: >
+        xrandr --output {{ item }} --same-as {{ primary_display }}
+      loop: "{{ connected_displays[1:] }}"
+      when: connected_displays | length > 1
