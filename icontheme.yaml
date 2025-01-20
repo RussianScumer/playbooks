@@ -2,9 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
-#Название темы иконок  
-  vars:
-    theme_name: 'Adwaita'
+
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -43,3 +41,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+#Название темы иконок  
+  vars:
+    theme_name: 

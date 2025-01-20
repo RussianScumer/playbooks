@@ -2,9 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
-#true false 
-  vars:
-    show_date: 'true'
+
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -38,3 +36,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+#true false 
+  vars:
+    show_date: 

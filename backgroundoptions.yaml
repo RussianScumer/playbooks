@@ -2,9 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
-  #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
-  vars:
-    option: 'zoom'
+
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -38,3 +36,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+  #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
+  vars:
+    option: 'zoom'

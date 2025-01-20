@@ -2,9 +2,6 @@
   hosts: all
   remote_user: root
   become: yes
-#Путь к изображению
-  vars:
-    path_to_image: 'path'
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -37,3 +34,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+#Путь к изображению 
+  vars:
+    path_to_image: 

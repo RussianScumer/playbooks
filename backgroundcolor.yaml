@@ -2,9 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
-#цвет в шестнатеричном формате
-  vars:
-    colorHEX: '#023c88'
+
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -38,3 +36,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+#цвет в шестнатеричном формате
+  vars:
+    colorHEX: 

@@ -2,9 +2,7 @@
   hosts: all
   remote_user: root
   become: yes
-#шрифт по умолчанию название и необходимый размер 
-  vars:
-    font_name_and_size: 'Cantarell 14' 
+
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -38,3 +36,6 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
+#шрифт по умолчанию название и необходимый размер 'Cantarell 14'
+  vars:
+    font_name_and_size:  
