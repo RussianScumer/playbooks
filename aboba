@@ -1,2 +1,11 @@
-file:///home/ilia/Загрузки/mountains-lake-Photoshop-reflection-1182970.jpg
-file:///usr/share/backgrounds/gnome/rubick-light.png
+ansible-playbook -i inventory.ini animations.yaml -e "animations=true"
+ansible-playbook -i inventory.ini backgroundcolor.yaml -e "colorHEX=#100000"
+ansible-playbook -i inventory.ini backgroundimage.yaml -e "path=path"
+ansible-playbook -i inventory.ini backgroundoption.yaml -e "option=zoom"
+ansible-playbook -i inventory.ini clockformat.yaml -e "option=12h"
+ansible-playbook -i inventory.ini clockshowdate.yaml -e "show_date=true"
+ansible-playbook -i inventory.ini font.yaml -e "font_name_and_size=Cantarell 11"
+ansible-playbook -i inventory.ini gnometheme.yaml -e "theme_name=Adwaita" from root
+ansible-playbook -i inventory.ini icontheme.yaml -e "theme_name=Adwaita" from root
+ansible-playbook -i inventory.ini scalingfactor.yaml -e "factor=1.5"
+ansible-playbook -i inventory.ini xrandr.yaml

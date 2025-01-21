@@ -1,5 +1,4 @@
 - name: Включение или выключение анимаций
-
   hosts: all
   remote_user: root
   become: yes
