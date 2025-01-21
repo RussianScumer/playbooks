@@ -2,7 +2,7 @@
   hosts: all
   #Формат отображения часов 12h 24h
   vars:
-    format: ''
+    format: 
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
@@ -27,7 +27,7 @@
       when: dconf_check.rc != 0   
 
     - name: Изменение формата даты и времени
-      command: dconf write /org/gnome/desktop/interface/clock-format '{{ format }}'
+      command: dconf write /org/gnome/desktop/interface/clock-format "'{{ format }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

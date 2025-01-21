@@ -2,7 +2,7 @@
   hosts: all
   #Название темы иконок  
   vars:
-    theme_name: ''
+    theme_name: 
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
@@ -32,7 +32,7 @@
         state: present
 
     - name: Изменение темы иконок GNOME
-      command: dconf write /org/gnome/desktop/interface/icon '{{ theme_name }}'
+      command: dconf write /org/gnome/desktop/interface/icon-theme "'{{ theme_name }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

@@ -27,7 +27,7 @@
       when: dconf_check.rc != 0  
 
     - name: Изменение картинки фона
-      command: dconf write /org/gnome/desktop/background/color '{{ path_to_image }}'
+      command: dconf write /org/gnome/desktop/background/picture-uri "'{{ path_to_image }}'"
         
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

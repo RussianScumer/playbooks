@@ -2,7 +2,7 @@
   hosts: all
   #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
   vars:
-    option: 'zoom'
+    option: 
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
@@ -27,9 +27,7 @@
       when: dconf_check.rc != 0  
 
     - name: Изменение фона
-      dconf: 
-        key: "/org/gnome/desktop/background/picture-options"
-        value: "'{{ option }}'"
+      command: dconf write /org/gnome/desktop/background/picture-options "'{{ option }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

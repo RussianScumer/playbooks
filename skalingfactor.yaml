@@ -2,7 +2,7 @@
   hosts: all
   #Коэффициент размера текста float
   vars:
-    factor: ''
+    factor: 
 
   tasks:
     - name: Проверка установлен ли GNOME
@@ -27,9 +27,8 @@
         state: present
       when: dconf_check.rc != 0   
 
-    - name: Изменение темы иконок GNOME
-      command: dconf write /org/gnome/desktop/interface/text-scaling-factor '{{ factor }}'
-
+    - name: Изменение размера текста
+      command: dconf write /org/gnome/desktop/interface/text-scaling-factor {{ factor }}
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

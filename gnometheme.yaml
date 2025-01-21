@@ -1,5 +1,6 @@
 - name: Установка и изменение темы GNOME
   hosts: all
+  user: root
   #Название темы GNOME  
   vars:
     theme_name: 
@@ -33,7 +34,7 @@
         state: present
 
     - name: Изменение темы GNOME
-      command: dconf write /org/gnome/desktop/interface/gtk-theme '{{ theme_name }}'
+      command: dconf write /org/gnome/desktop/interface/gtk-theme "'{{ theme_name }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  

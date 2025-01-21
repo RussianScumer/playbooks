@@ -28,7 +28,7 @@
       when: dconf_check.rc != 0   
 
     - name: Изменение шрифта
-      command: dconf write /org/gnome/desktop/interface/font-name '{{ font_name_and_size }}'
+      command: dconf write /org/gnome/desktop/interface/font-name "'{{ font_name_and_size }}'"
       
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
