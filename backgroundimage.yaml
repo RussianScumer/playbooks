@@ -1,14 +1,14 @@
 - name: Изменение картинки фона
   hosts: all
-  remote_user: root
-  become: yes
+  #Путь к изображению 
+  vars:
+    path_to_image:
 
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
-      ignore_errors: yes
-
+      ignore_errors: true
     - name: Установка GNOME, если не установлен
       dnf:
         name: gnome-desktop
@@ -18,7 +18,7 @@
     - name:  Проверка установлен ли dconf
       command: dconf-editor --version
       register: dconf_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка dconf
       dnf:
@@ -27,13 +27,10 @@
       when: dconf_check.rc != 0  
 
     - name: Изменение картинки фона
-      dconf:
-        key: "/org/gnome/desktop/background/picture-uri"
-        value: "'{{ path_to_image }}'"
+      command: dconf write /org/gnome/desktop/background/color '{{ path_to_image }}'
+        
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
-#Путь к изображению 
-  vars:
-    path_to_image: 
+

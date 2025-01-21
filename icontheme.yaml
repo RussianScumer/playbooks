@@ -1,14 +1,13 @@
 - name: Установка и изменение темы иконок GNOME
   hosts: all
-  remote_user: root
-  become: yes
-
-
+  #Название темы иконок  
+  vars:
+    theme_name: ''
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка GNOME, если не установлен
       dnf:
@@ -19,7 +18,7 @@
     - name:  Проверка установлен ли dconf
       command: dconf-editor --version
       register: dconf_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка dconf
       dnf:
@@ -33,14 +32,9 @@
         state: present
 
     - name: Изменение темы иконок GNOME
-      dconf:
-        key: "/org/gnome/desktop/interface/icon"
-        value: "'{{ theme_name }}'"
+      command: dconf write /org/gnome/desktop/interface/icon '{{ theme_name }}'
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
-#Название темы иконок  
-  vars:
-    theme_name: 

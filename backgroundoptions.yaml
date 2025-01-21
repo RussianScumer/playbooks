@@ -1,14 +1,13 @@
 - name: Настройки отображения
   hosts: all
-  remote_user: root
-  become: yes
-
-
+  #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
+  vars:
+    option: 'zoom'
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка GNOME, если не установлен
       dnf:
@@ -19,7 +18,7 @@
     - name:  Проверка установлен ли dconf
       command: dconf-editor --version
       register: dconf_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка dconf
       dnf:
@@ -36,6 +35,4 @@
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
-  #'none' 'wallpaper' 'centered' 'scaled' 'stretched' 'zoom' 'spanned'
-  vars:
-    option: 'zoom'
+

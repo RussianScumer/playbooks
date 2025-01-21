@@ -1,7 +1,6 @@
 ---
 - name: Дублирование xrandr
   hosts: all
-  become: yes
   tasks:
     - name: Получение списка экранов
       command: xrandr --query

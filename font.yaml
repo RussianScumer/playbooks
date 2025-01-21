@@ -1,14 +1,14 @@
 - name: Установка шрифта по умолчанию
   hosts: all
-  remote_user: root
-  become: yes
-
+  #шрифт по умолчанию название и необходимый размер 'Cantarell 14'
+  vars:
+    font_name_and_size:  
 
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
       register: gnome_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка GNOME, если не установлен
       dnf:
@@ -19,7 +19,7 @@
     - name:  Проверка установлен ли dconf
       command: dconf-editor --version
       register: dconf_check
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Установка dconf
       dnf:
@@ -28,14 +28,9 @@
       when: dconf_check.rc != 0   
 
     - name: Изменение шрифта
-      dconf:
-        key: "/org/gnome/desktop/interface/font-name"
-        value: "'{{ font_name_and_size }}'"
+      command: dconf write /org/gnome/desktop/interface/font-name '{{ font_name_and_size }}'
       
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
       async: 10
       poll: 0
-#шрифт по умолчанию название и необходимый размер 'Cantarell 14'
-  vars:
-    font_name_and_size:  
