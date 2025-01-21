@@ -1,10 +1,7 @@
 - name: Изменение анимации
   hosts: all
-  remote_user: root
-  become: yes
   vars:
-    animations: 'true'
-
+    animations: true
   tasks:
     - name: Проверка установлен ли GNOME
       command: gnome-shell --version
@@ -28,10 +25,8 @@
         state: present
       when: dconf_check.rc != 0  
 
-    - name: Изменение темы иконок GNOME
-      dconf:
-       key: "/org/gnome/desktop/interface/enable-animations"
-       value: "'{{ animations }}'"
+    - name: Включение выключении анимаций
+      command: dconf write /org/gnome/desktop/interface/enable-animations "'{{ animations }}'"
 
     - name: Перезапуск GNOME без перезагрузки
       command: killall -3 gnome-shell  
